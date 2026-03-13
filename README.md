@@ -35,26 +35,11 @@
 
 | Quest | Riti | Calendario |
 |-------|------|------------|
-| ![Quest](assets/screenshots/quests.png) | ![Riti](assets/screenshots/habits.png) | ![Calendario](assets/screenshots/calendar.png) |
+| ![Quest](assets/screenshot/quests.png) | ![Riti](assets/screenshot/habits.png) | ![Calendario](assets/screenshot/calendar.png) |
 
 
 ## 🚀 Installazione
-### Opzione A — Scarica l'eseguibile (consigliato)
-Vai nella sezione [**Releases**](../../releases) e scarica:
-| Sistema | File |
-|---------|------|
-| Windows | `QuestLog-Setup-x.x.x.exe` |
-| macOS | `QuestLog-x.x.x.dmg` |
-| Linux | `QuestLog-x.x.x.AppImage` |
-
-**Windows:** esegui il `.exe`, segui il wizard di installazione. Verrà creata una scorciatoia sul desktop e nel menu Start.
-**macOS:** apri il `.dmg`, trascina QuestLog nella cartella Applicazioni.
-**Linux:** rendi eseguibile e avvia:
-```bash
-chmod +x QuestLog-*.AppImage
-./QuestLog-*.AppImage
-```
-### Opzione B — Esegui da sorgente
+### Esegui da sorgente
 #### Prerequisiti
 - [Node.js](https://nodejs.org/) v18 o superiore
 - npm (incluso con Node.js)
@@ -77,10 +62,9 @@ npm start
 ```
 
 L'app si aprirà come finestra nativa sul tuo desktop.
----
+
 
 ## 📦 Build — crea l'eseguibile
-
 Per produrre un installer distribuibile:
 
 ```bash
