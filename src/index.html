@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QuestLog — Il Tuo Cammino Eroico</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+body[data-theme="warrior"]{--accent:#C9A84C;--accent-light:#E8C97A;--accent-dark:#8B6914;--bg:#1C1008;--bg2:#0A0510;--panel:#2A1810;--panel-light:#3D2415;--text:#F5EDD6;--text-dim:#C8B88A;--border:rgba(201,168,76,0.25);--border-strong:rgba(201,168,76,0.5);--glow:rgba(201,168,76,0.15);--star:255,230,150}
+body[data-theme="mage"]{--accent:#A87CE8;--accent-light:#C9A8FF;--accent-dark:#6B44B0;--bg:#0E0818;--bg2:#060310;--panel:#1A1030;--panel-light:#261845;--text:#EDE0FF;--text-dim:#B09CD0;--border:rgba(168,124,232,0.25);--border-strong:rgba(168,124,232,0.5);--glow:rgba(168,124,232,0.15);--star:200,180,255}
+body[data-theme="ranger"]{--accent:#6AB84C;--accent-light:#8EE068;--accent-dark:#3D7A1A;--bg:#081410;--bg2:#030A06;--panel:#0F2018;--panel-light:#1A3024;--text:#DFF5E0;--text-dim:#9DC8A4;--border:rgba(106,184,76,0.25);--border-strong:rgba(106,184,76,0.5);--glow:rgba(106,184,76,0.12);--star:180,255,180}
+body[data-theme="paladin"]{--accent:#E8D8A0;--accent-light:#FFF0C0;--accent-dark:#B0A060;--bg:#0C0C14;--bg2:#060608;--panel:#16182A;--panel-light:#20243C;--text:#F0EEF8;--text-dim:#B0AECE;--border:rgba(232,216,160,0.25);--border-strong:rgba(232,216,160,0.5);--glow:rgba(232,216,160,0.12);--star:240,240,255}
+body[data-theme="rogue"]{--accent:#4CC8C8;--accent-light:#72E8E8;--accent-dark:#2A8080;--bg:#060E0E;--bg2:#020808;--panel:#0C1818;--panel-light:#142424;--text:#D0F5F5;--text-dim:#80B8B8;--border:rgba(76,200,200,0.25);--border-strong:rgba(76,200,200,0.5);--glow:rgba(76,200,200,0.12);--star:150,255,255}
+body[data-theme="druid"]{--accent:#C8882A;--accent-light:#E8A84C;--accent-dark:#8B5A14;--bg:#100C04;--bg2:#080602;--panel:#201408;--panel-light:#301E10;--text:#F5EAD0;--text-dim:#C8AC78;--border:rgba(200,136,42,0.25);--border-strong:rgba(200,136,42,0.5);--glow:rgba(200,136,42,0.15);--star:255,220,130}
+body[data-theme="bard"]{--accent:#D868A8;--accent-light:#F090CC;--accent-dark:#8B3870;--bg:#120810;--bg2:#080408;--panel:#1E1020;--panel-light:#2C1830;--text:#F5D8EE;--text-dim:#C890B8;--border:rgba(216,104,168,0.25);--border-strong:rgba(216,104,168,0.5);--glow:rgba(216,104,168,0.15);--star:255,180,240}
+
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Crimson Pro',serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;transition:background .5s,color .3s}
+body::before{content:'';position:fixed;inset:0;background:
+  radial-gradient(1px 1px at 8% 12%,rgba(var(--star),.7) 0%,transparent 100%),
+  radial-gradient(1px 1px at 22% 8%,rgba(var(--star),.4) 0%,transparent 100%),
+  radial-gradient(1.5px 1.5px at 38% 5%,rgba(var(--star),.6) 0%,transparent 100%),
+  radial-gradient(1px 1px at 55% 3%,rgba(var(--star),.5) 0%,transparent 100%),
+  radial-gradient(1px 1px at 72% 9%,rgba(var(--star),.7) 0%,transparent 100%),
+  radial-gradient(2px 2px at 85% 15%,rgba(var(--star),.4) 0%,transparent 100%),
+  radial-gradient(1px 1px at 15% 28%,rgba(var(--star),.3) 0%,transparent 100%),
+  radial-gradient(1px 1px at 45% 22%,rgba(var(--star),.5) 0%,transparent 100%),
+  radial-gradient(1.5px 1.5px at 68% 20%,rgba(var(--star),.4) 0%,transparent 100%),
+  radial-gradient(1px 1px at 5% 45%,rgba(var(--star),.3) 0%,transparent 100%),
+  radial-gradient(2px 2px at 30% 40%,rgba(var(--star),.5) 0%,transparent 100%),
+  radial-gradient(1px 1px at 60% 38%,rgba(var(--star),.4) 0%,transparent 100%),
+  radial-gradient(1px 1px at 12% 60%,rgba(var(--star),.5) 0%,transparent 100%),
+  radial-gradient(1px 1px at 50% 55%,rgba(var(--star),.4) 0%,transparent 100%),
+  radial-gradient(1.5px 1.5px at 82% 58%,rgba(var(--star),.6) 0%,transparent 100%),
+  radial-gradient(1px 1px at 25% 72%,rgba(var(--star),.3) 0%,transparent 100%),
+  radial-gradient(1px 1px at 65% 70%,rgba(var(--star),.5) 0%,transparent 100%),
+  radial-gradient(2px 2px at 42% 80%,rgba(var(--star),.4) 0%,transparent 100%),
+  radial-gradient(1px 1px at 18% 88%,rgba(var(--star),.5) 0%,transparent 100%),
+  radial-gradient(1.5px 1.5px at 75% 95%,rgba(var(--star),.6) 0%,transparent 100%),
+  linear-gradient(180deg,var(--bg2) 0%,var(--bg) 30%);
+pointer-events:none;z-index:0;transition:background .5s}
+
+.app{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 16px 80px}
+
+.header{text-align:center;padding:28px 0 16px;border-bottom:1px solid var(--border-strong);margin-bottom:20px}
+.header h1{font-family:'Cinzel',serif;font-size:36px;font-weight:700;color:var(--accent-light);text-shadow:0 0 40px var(--glow);letter-spacing:4px}
+.header h1 span{display:block;font-size:11px;font-weight:400;letter-spacing:6px;color:var(--text-dim);margin-top:4px;font-family:'Crimson Pro',serif;font-style:italic}
+.header::after{content:'✦ ✦ ✦';display:block;font-size:11px;color:var(--accent);letter-spacing:14px;margin-top:10px}
+
+.hero-bar{background:var(--panel);border:1px solid var(--border-strong);border-radius:4px;padding:14px 20px;display:flex;align-items:center;gap:20px;margin-bottom:16px;flex-wrap:wrap;transition:background .5s,border-color .5s}
+.hero-avatar{width:50px;height:50px;border:2px solid var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;background:var(--panel-light);flex-shrink:0}
+.hero-info{flex:1;min-width:140px}
+.hero-name{font-family:'Cinzel',serif;font-size:15px;color:var(--accent-light);font-weight:600}
+.hero-class{font-size:12px;color:var(--text-dim);font-style:italic;margin-top:2px}
+.xp-bar-wrap{flex:1;min-width:180px}
+.xp-label{display:flex;justify-content:space-between;font-size:10px;color:var(--accent);letter-spacing:1px;font-family:'Cinzel',serif;margin-bottom:5px}
+.xp-bar{height:9px;background:rgba(255,255,255,0.05);border:1px solid var(--accent-dark);border-radius:2px;overflow:hidden}
+.xp-fill{height:100%;background:linear-gradient(90deg,var(--accent-dark),var(--accent-light));transition:width .8s ease}
+.stats-row{display:flex;gap:16px;flex-wrap:wrap}
+.stat-gem{text-align:center}
+.stat-gem .val{font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:var(--accent-light)}
+.stat-gem .lbl{font-size:9px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase}
+
+.nav{display:flex;gap:3px;margin-bottom:18px;background:var(--panel);border:1px solid var(--border);border-radius:4px;padding:3px;transition:background .5s}
+.nav-btn{flex:1;padding:9px 6px;background:transparent;border:1px solid transparent;border-radius:3px;color:var(--text-dim);cursor:pointer;font-family:'Cinzel',serif;font-size:10px;letter-spacing:1px;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:5px;white-space:nowrap}
+.nav-btn:hover{border-color:var(--border);color:var(--accent-light)}
+.nav-btn.active{background:var(--panel-light);border-color:var(--accent);color:var(--accent-light)}
+
+.panel{display:none}
+.panel.active{display:block}
+.panel-grid{display:grid;grid-template-columns:1fr 310px;gap:14px}
+@media(max-width:720px){.panel-grid{grid-template-columns:1fr}}
+
+.card{background:var(--panel);border:1px solid var(--border-strong);border-radius:4px;padding:18px;margin-bottom:12px;transition:background .5s,border-color .5s}
+.card-title{font-family:'Cinzel',serif;font-size:12px;color:var(--accent);letter-spacing:2px;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+
+input[type="text"],input[type="date"],input[type="time"],select,textarea{background:var(--bg);border:1px solid var(--border-strong);border-radius:3px;color:var(--text);padding:8px 11px;font-family:'Crimson Pro',serif;font-size:14px;width:100%;outline:none;transition:border-color .2s,background .5s}
+input:focus,select:focus,textarea:focus{border-color:var(--accent)}
+select option{background:var(--panel)}
+
+.btn{padding:8px 16px;border-radius:3px;cursor:pointer;font-family:'Cinzel',serif;font-size:10px;letter-spacing:1px;border:1px solid;transition:all .2s}
+.btn-accent{background:transparent;border-color:var(--accent);color:var(--accent-light)}
+.btn-accent:hover{background:var(--glow)}
+.btn-danger{background:transparent;border-color:rgba(180,50,50,.6);color:#E86060}
+.btn-danger:hover{background:rgba(139,26,26,.1)}
+.btn-sm{padding:4px 9px;font-size:9px}
+
+.add-form{display:flex;flex-direction:column;gap:9px;margin-bottom:18px}
+.add-form-row{display:flex;gap:8px}
+.input-label{font-size:10px;color:var(--accent);letter-spacing:1px;font-family:'Cinzel',serif}
+
+/* MATRIX */
+.matrix-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;flex:1}
+.matrix-cell{border:1px solid var(--border);border-radius:3px;padding:10px;min-height:110px}
+.matrix-cell-title{font-family:'Cinzel',serif;font-size:9px;letter-spacing:1.5px;margin-bottom:8px;display:flex;align-items:center;gap:5px}
+.cell-ui{border-color:rgba(220,80,80,.4)}.cell-ui .matrix-cell-title{color:#E06060}
+.cell-nui{border-color:rgba(201,168,76,.35)}.cell-nui .matrix-cell-title{color:var(--accent-light)}
+.cell-uni{border-color:rgba(180,140,60,.35)}.cell-uni .matrix-cell-title{color:#C8A050}
+.cell-nuni{border-color:rgba(100,100,100,.3)}.cell-nuni .matrix-cell-title{color:var(--text-dim)}
+
+/* QUEST ITEM */
+.quest-item{display:flex;align-items:flex-start;gap:8px;padding:7px 9px;border:1px solid var(--border);border-radius:3px;margin-bottom:5px;background:rgba(255,255,255,.02);transition:opacity .3s}
+.quest-item.completed{opacity:.4}
+.quest-item.completed .quest-name{text-decoration:line-through}
+.quest-check{width:18px;height:18px;border:1.5px solid var(--accent-dark);border-radius:2px;flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all .2s;margin-top:2px}
+.quest-check:hover,.quest-check.checked{border-color:var(--accent);background:var(--glow)}
+.quest-body{flex:1;min-width:0}
+.quest-name{font-size:13px;color:var(--text);line-height:1.3}
+.quest-meta{display:flex;gap:6px;margin-top:2px;flex-wrap:wrap;align-items:center}
+.quest-deadline{font-size:10px;color:var(--text-dim);font-style:italic}
+.quest-deadline.overdue{color:#E86060}
+.quest-xp{font-size:10px;color:var(--accent);font-family:'Cinzel',serif}
+
+/* HABITS */
+.habit-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--border);border-radius:3px;margin-bottom:8px;background:rgba(255,255,255,.02)}
+.habit-dot{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--border-strong);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;transition:all .2s;flex-shrink:0}
+.habit-dot.done{border-color:var(--accent);background:var(--glow)}
+.habit-info{flex:1}
+.habit-name{font-size:14px;color:var(--text)}
+.habit-streak{font-size:10px;color:var(--accent);font-family:'Cinzel',serif;margin-top:2px}
+.habit-chain{display:flex;gap:3px;margin-top:5px}
+.chain-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid var(--border)}
+.chain-dot.filled{background:var(--accent-dark);border-color:var(--accent-dark)}
+.chain-dot.today{background:var(--accent-light);border-color:var(--accent);box-shadow:0 0 5px var(--glow)}
+
+/* CALENDAR */
+.calendar-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.cal-month{font-family:'Cinzel',serif;font-size:13px;color:var(--accent-light);letter-spacing:2px}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.cal-day-name{text-align:center;font-size:9px;color:var(--accent-dark);font-family:'Cinzel',serif;padding:3px 0 7px;letter-spacing:1px}
+.cal-day{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:5px;border:1px solid transparent;border-radius:3px;cursor:pointer;font-size:12px;transition:all .2s;position:relative;overflow:hidden}
+.cal-day:hover{border-color:var(--border);background:var(--glow)}
+.cal-day.today{border-color:var(--accent);color:var(--accent-light);background:rgba(255,255,255,.04)}
+.cal-day.other-month{color:rgba(255,255,255,.12);cursor:default}
+.cal-day.other-month:hover{border-color:transparent;background:transparent}
+.cal-event-dots{display:flex;gap:2px;margin-top:2px;flex-wrap:wrap;justify-content:center}
+.cal-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+
+/* OVERLAY / MODAL */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);display:flex;align-items:center;justify-content:center;z-index:500;opacity:0;pointer-events:none;transition:opacity .25s}
+.overlay.show{opacity:1;pointer-events:all}
+.modal{background:var(--panel);border:2px solid var(--border-strong);border-radius:6px;padding:26px;max-width:420px;width:92%;transition:background .5s}
+.modal-title{font-family:'Cinzel',serif;font-size:14px;color:var(--accent-light);letter-spacing:2px;margin-bottom:18px}
+.modal-form{display:flex;flex-direction:column;gap:10px}
+.modal-row{display:flex;gap:8px}
+.modal-btns{display:flex;gap:8px;margin-top:6px;justify-content:flex-end}
+.levelup-modal{background:var(--panel);border:2px solid var(--accent);border-radius:6px;padding:40px;text-align:center;max-width:360px;width:90%}
+.levelup-modal .icon{font-size:52px;margin-bottom:14px}
+.levelup-modal h2{font-family:'Cinzel',serif;font-size:20px;color:var(--accent-light);margin-bottom:8px;letter-spacing:3px}
+.levelup-modal p{color:var(--text-dim);font-size:15px;font-style:italic;margin-bottom:20px}
+
+/* COLOR PICKER */
+.color-swatch{width:24px;height:24px;border-radius:50%;border:2px solid transparent;cursor:pointer;transition:all .15s;flex-shrink:0}
+.color-swatch.sel{border-color:white;transform:scale(1.2)}
+
+/* THEMES */
+.theme-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px}
+.theme-card{border:2px solid var(--border);border-radius:5px;padding:12px 8px;text-align:center;cursor:pointer;transition:all .2s;background:rgba(255,255,255,.02)}
+.theme-card:hover{border-color:var(--border-strong);background:rgba(255,255,255,.05)}
+.theme-card.active{border-color:var(--accent);background:var(--glow)}
+.theme-icon{font-size:26px;margin-bottom:5px}
+.theme-name{font-family:'Cinzel',serif;font-size:9px;letter-spacing:1.5px;color:var(--accent-light)}
+.theme-desc{font-size:11px;color:var(--text-dim);margin-top:2px;font-style:italic}
+
+/* DAY EVENTS */
+.day-event{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:3px;margin-bottom:6px;font-size:13px;border-left:3px solid transparent;background:rgba(255,255,255,.02)}
+.day-event-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.day-event-name{flex:1;color:var(--text)}
+.day-event-time{font-size:11px;color:var(--text-dim);white-space:nowrap}
+.day-event-rep{font-size:10px;font-family:'Cinzel',serif;color:#70D8D8;letter-spacing:.5px;white-space:nowrap}
+
+.log-entry{padding:6px 0;border-bottom:1px dashed var(--border);font-size:13px;display:flex;gap:8px;align-items:baseline}
+.log-time{color:var(--text-dim);font-size:10px;white-space:nowrap}
+.log-text{color:var(--text);flex:1}
+.log-xp{color:var(--accent);font-family:'Cinzel',serif;font-size:10px;white-space:nowrap}
+
+.empty-state{text-align:center;padding:24px;color:var(--text-dim);font-style:italic;font-size:14px;border:1px dashed var(--border);border-radius:3px;opacity:.7}
+.section-sep{border:none;border-top:1px solid var(--border);margin:14px 0}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--accent-dark);border-radius:2px}
+
+.toast{position:fixed;bottom:24px;right:24px;background:var(--panel-light);border:1px solid var(--accent);border-radius:4px;padding:13px 18px;color:var(--accent-light);font-family:'Cinzel',serif;font-size:12px;z-index:1000;transform:translateX(200%);transition:transform .4s cubic-bezier(.34,1.56,.64,1);letter-spacing:1px;max-width:280px}
+.toast.show{transform:translateX(0)}
+</style>
+</head>
+<body data-theme="warrior">
+<div class="app">
+
+<div class="header">
+  <h1>⚔ QuestLog <span>Il Registro delle Imprese</span></h1>
+</div>
+
+<div class="hero-bar">
+  <div class="hero-avatar" id="heroAvatar">🧙</div>
+  <div class="hero-info">
+    <div class="hero-name" id="heroNameDisplay">Eroe Senza Nome</div>
+    <div class="hero-class" id="heroClassDisplay">Avventuriero — Livello 1</div>
+  </div>
+  <div class="xp-bar-wrap">
+    <div class="xp-label"><span>ESPERIENZA</span><span id="xpLabel">0 / 100 XP</span></div>
+    <div class="xp-bar"><div class="xp-fill" id="xpFill" style="width:0%"></div></div>
+  </div>
+  <div class="stats-row">
+    <div class="stat-gem"><div class="val" id="totalXpD">0</div><div class="lbl">XP Tot.</div></div>
+    <div class="stat-gem"><div class="val" id="questsDoneD">0</div><div class="lbl">Quest</div></div>
+    <div class="stat-gem"><div class="val" id="streakD">0</div><div class="lbl">Streak</div></div>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="nav-btn active" onclick="showPanel('quests')" id="nav-quests"><span>📜</span>Quest</button>
+  <button class="nav-btn" onclick="showPanel('habits')" id="nav-habits"><span>🔥</span>Riti</button>
+  <button class="nav-btn" onclick="showPanel('calendar')" id="nav-calendar"><span>🗺</span>Calendario</button>
+  <button class="nav-btn" onclick="showPanel('log')" id="nav-log"><span>📖</span>Cronache</button>
+  <button class="nav-btn" onclick="showPanel('hero')" id="nav-hero"><span>⚔</span>Eroe</button>
+</div>
+
+<!-- QUESTS -->
+<div class="panel active" id="panel-quests">
+  <div class="panel-grid">
+    <div>
+      <div class="card">
+        <div class="card-title">📜 Aggiungi una Quest</div>
+        <div class="add-form">
+          <input type="text" id="questInput" placeholder="Descrivi la tua impresa..." />
+          <div class="add-form-row">
+            <div style="flex:1">
+              <div class="input-label" style="margin-bottom:4px">URGENZA</div>
+              <select id="questUrgency">
+                <option value="urgent">⚡ Urgente</option>
+                <option value="not-urgent" selected>🌙 Non Urgente</option>
+              </select>
+            </div>
+            <div style="flex:1">
+              <div class="input-label" style="margin-bottom:4px">IMPORTANZA</div>
+              <select id="questImportance">
+                <option value="important" selected>🔱 Importante</option>
+                <option value="not-important">◈ Non Importante</option>
+              </select>
+            </div>
+          </div>
+          <input type="date" id="questDeadline" />
+          <button class="btn btn-accent" onclick="addQuest()">⚔ Aggiungi Quest</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">🗡 La Matrice delle Imprese</div>
+        <div style="display:grid;grid-template-columns:auto 1fr;gap:6px;align-items:stretch">
+          <div style="display:flex;flex-direction:column;justify-content:space-around;padding-right:4px;padding-top:22px">
+            <div style="font-size:9px;font-family:'Cinzel',serif;color:var(--accent-light);writing-mode:vertical-rl;transform:rotate(180deg);letter-spacing:.5px;text-align:center">🔱 IMPORTANTE</div>
+            <div style="font-size:9px;font-family:'Cinzel',serif;color:var(--text-dim);writing-mode:vertical-rl;transform:rotate(180deg);letter-spacing:.5px;text-align:center">◈ NON IMP.</div>
+          </div>
+          <div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:4px;padding-left:2px">
+              <div style="text-align:center;font-size:9px;font-family:'Cinzel',serif;color:#E06060;letter-spacing:.5px">⚡ URGENTE</div>
+              <div style="text-align:center;font-size:9px;font-family:'Cinzel',serif;color:var(--text-dim);letter-spacing:.5px">🌙 NON URG.</div>
+            </div>
+            <div class="matrix-grid">
+              <div class="matrix-cell cell-ui"><div class="matrix-cell-title">🔥 FAI ORA <span style="font-size:8px;opacity:.6">+30xp</span></div><div id="cell-ui"></div></div>
+              <div class="matrix-cell cell-nui"><div class="matrix-cell-title">⏳ PIANIFICA <span style="font-size:8px;opacity:.6">+20xp</span></div><div id="cell-nui"></div></div>
+              <div class="matrix-cell cell-uni"><div class="matrix-cell-title">⚔ DELEGA <span style="font-size:8px;opacity:.6">+15xp</span></div><div id="cell-uni"></div></div>
+              <div class="matrix-cell cell-nuni"><div class="matrix-cell-title">💨 ELIMINA <span style="font-size:8px;opacity:.6">+10xp</span></div><div id="cell-nuni"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="card-title">🌟 Oggi</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div style="text-align:center;padding:10px;border:1px solid var(--border);border-radius:3px">
+            <div style="font-family:'Cinzel',serif;font-size:20px;color:var(--accent-light)" id="todayXpD">0</div>
+            <div style="font-size:10px;color:var(--text-dim);margin-top:2px">XP Oggi</div>
+          </div>
+          <div style="text-align:center;padding:10px;border:1px solid var(--border);border-radius:3px">
+            <div style="font-family:'Cinzel',serif;font-size:20px;color:var(--accent-light)" id="todayQD">0</div>
+            <div style="font-size:10px;color:var(--text-dim);margin-top:2px">Completate</div>
+          </div>
+        </div>
+        <hr class="section-sep">
+        <div style="font-size:13px;color:var(--text-dim);font-style:italic;text-align:center" id="quoteD">"Ogni grande impresa inizia con un primo passo."</div>
+      </div>
+      <div class="card"><div class="card-title">⏰ In Scadenza</div><div id="upcomingList"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- HABITS -->
+<div class="panel" id="panel-habits">
+  <div class="panel-grid">
+    <div>
+      <div class="card">
+        <div class="card-title">🔥 Aggiungi Rito</div>
+        <div class="add-form">
+          <div class="add-form-row">
+            <div style="flex:0 0 auto">
+              <div class="input-label" style="margin-bottom:4px">ICONA</div>
+              <select id="habitEmoji" style="width:auto">
+                <option>🌅</option><option>⚔</option><option>📚</option><option>🏃</option>
+                <option>🧘</option><option>💧</option><option>🌙</option><option>✍</option>
+                <option>🎯</option><option>🏋</option><option>🥗</option><option>🎨</option>
+                <option>🎵</option><option>🧹</option><option>💊</option><option>🌿</option>
+                <option>🤝</option><option>💤</option><option>🖊</option><option>🏊</option>
+              </select>
+            </div>
+            <div style="flex:1">
+              <div class="input-label" style="margin-bottom:4px">NOME DEL RITO</div>
+              <input type="text" id="habitInput" placeholder="Es: Meditazione mattutina..." />
+            </div>
+          </div>
+          <button class="btn btn-accent" onclick="addHabit()">🔥 Aggiungi Rito</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">🔥 I Tuoi Riti Quotidiani</div>
+        <div id="habitList"></div>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="card-title">🏆 Gradi di Leggenda</div>
+        <div style="font-size:13px;color:var(--text-dim);line-height:2">
+          <div>🔥 1–6 giorni — <span style="color:var(--accent)">Iniziato</span></div>
+          <div>⚔ 7–13 — <span style="color:var(--accent)">Guerriero</span></div>
+          <div>🌟 14–20 — <span style="color:var(--accent)">Campione</span></div>
+          <div>👑 21–29 — <span style="color:var(--accent)">Leggenda</span></div>
+          <div>⚡ 30+ — <span style="color:var(--accent)">Immortale</span></div>
+        </div>
+        <hr class="section-sep">
+        <div style="font-size:12px;color:var(--text-dim)">Ogni rito: <span style="color:var(--accent)">+15 XP</span><br>Streak 7+ giorni: <span style="color:var(--accent)">+5 XP bonus</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CALENDAR -->
+<div class="panel" id="panel-calendar">
+  <div class="panel-grid">
+    <div>
+      <div class="card">
+        <div class="calendar-header">
+          <button class="btn btn-accent btn-sm" onclick="changeMonth(-1)">◀</button>
+          <div class="cal-month" id="calMonthLabel"></div>
+          <button class="btn btn-accent btn-sm" onclick="changeMonth(1)">▶</button>
+        </div>
+        <div class="cal-grid" id="calGrid"></div>
+        <hr class="section-sep">
+        <button class="btn btn-accent" onclick="openEventModal(null,null)" style="width:100%">✦ Nuovo Evento</button>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="card-title" id="calDayTitle">📅 Seleziona un giorno</div>
+        <div id="calDayContent"><div class="empty-state">Clicca su un giorno</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LOG -->
+<div class="panel" id="panel-log">
+  <div class="card">
+    <div class="card-title">📖 Le Cronache dell'Eroe</div>
+    <div id="logList"><div class="empty-state">Nessuna impresa ancora registrata...</div></div>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="panel" id="panel-hero">
+  <div class="panel-grid">
+    <div>
+      <div class="card">
+        <div class="card-title">⚔ Configura il Tuo Eroe</div>
+        <div class="add-form">
+          <div class="input-label">NOME</div>
+          <input type="text" id="heroNameInput" placeholder="Il tuo nome leggendario..." />
+          <div class="input-label">CLASSE</div>
+          <select id="heroClassInput">
+            <option value="Guerriero">⚔ Guerriero</option>
+            <option value="Mago">🧙 Mago</option>
+            <option value="Ranger">🏹 Ranger</option>
+            <option value="Paladino">🛡 Paladino</option>
+            <option value="Ladro">🗡 Ladro</option>
+            <option value="Druido">🌿 Druido</option>
+            <option value="Bardo">🎵 Bardo</option>
+          </select>
+          <div class="input-label">AVATAR</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <span class="av-pick" onclick="selectAv(this,'🧙')" style="font-size:24px;cursor:pointer;padding:5px;border:1px solid var(--border);border-radius:3px">🧙</span>
+            <span class="av-pick" onclick="selectAv(this,'⚔')" style="font-size:24px;cursor:pointer;padding:5px;border:1px solid var(--border);border-radius:3px">⚔</span>
+            <span class="av-pick" onclick="selectAv(this,'🏹')" style="font-size:24px;cursor:pointer;padding:5px;border:1px solid var(--border);border-radius:3px">🏹</span>
+            <span class="av-pick" onclick="selectAv(this,'🛡')" style="font-size:24px;cursor:pointer;padding:5px;border:1px solid var(--border);border-radius:3px">🛡</span>
+            <span class="av-pick" onclick="selectAv(this,'👑')" style="font-size:24px;cursor:pointer;padding:5px;border:1px solid var(--border);border-radius:3px">👑</span>
+            <span class="av-pick" onclick="selectAv(this,'🐉')" style="font-size:24px;cursor:pointer;padding:5px;border:1px solid var(--border);border-radius:3px">🐉</span>
+            <span class="av-pick" onclick="selectAv(this,'🔮')" style="font-size:24px;cursor:pointer;padding:5px;border:1px solid var(--border);border-radius:3px">🔮</span>
+            <span class="av-pick" onclick="selectAv(this,'⚡')" style="font-size:24px;cursor:pointer;padding:5px;border:1px solid var(--border);border-radius:3px">⚡</span>
+            <span class="av-pick" onclick="selectAv(this,'🌿')" style="font-size:24px;cursor:pointer;padding:5px;border:1px solid var(--border);border-radius:3px">🌿</span>
+            <span class="av-pick" onclick="selectAv(this,'🎵')" style="font-size:24px;cursor:pointer;padding:5px;border:1px solid var(--border);border-radius:3px">🎵</span>
+          </div>
+          <button class="btn btn-accent" onclick="saveHero()">💾 Salva Eroe</button>
+          <div style="font-size:11px;color:var(--text-dim);font-style:italic">* Scegliere una classe applica automaticamente il tema corrispondente</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">🏆 Il Tuo Cammino</div>
+        <div id="levelsList" style="font-size:13px;line-height:1.9"></div>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="card-title">🎨 Tema dell'Eroe</div>
+        <div class="theme-grid" id="themeGrid"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /app -->
+
+<div class="toast" id="toast"></div>
+
+<!-- LEVEL UP -->
+<div class="overlay" id="lvlOverlay">
+  <div class="levelup-modal">
+    <div class="icon">⚡</div>
+    <h2>LEVEL UP!</h2>
+    <p id="lvlText">Sei salito di livello!</p>
+    <button class="btn btn-accent" onclick="document.getElementById('lvlOverlay').classList.remove('show')">⚔ Avanti, Eroe!</button>
+  </div>
+</div>
+
+<!-- EVENT MODAL -->
+<div class="overlay" id="evOverlay">
+  <div class="modal">
+    <div class="modal-title" id="evModalTitle">✦ Nuovo Evento</div>
+    <div class="modal-form">
+      <div class="input-label">NOME EVENTO</div>
+      <input type="text" id="evName" placeholder="Es: Riunione, Allenamento..." />
+      <div class="modal-row">
+        <div style="flex:1">
+          <div class="input-label" style="margin-bottom:4px">DATA</div>
+          <input type="date" id="evDate" />
+        </div>
+        <div style="flex:1">
+          <div class="input-label" style="margin-bottom:4px">ORA (opz.)</div>
+          <input type="time" id="evTime" />
+        </div>
+      </div>
+      <div class="input-label">RIPETIZIONE</div>
+      <select id="evRepeat" onchange="toggleRepEnd()">
+        <option value="none">Nessuna ripetizione</option>
+        <option value="daily">Ogni giorno</option>
+        <option value="weekly">Ogni settimana</option>
+        <option value="monthly">Ogni mese</option>
+      </select>
+      <div id="repEndWrap" style="display:none">
+        <div class="input-label" style="margin-bottom:4px">FINE RIPETIZIONE (opz.)</div>
+        <input type="date" id="evRepEnd" />
+      </div>
+      <div class="input-label">COLORE</div>
+      <div style="display:flex;gap:7px;flex-wrap:wrap" id="colorPicker"></div>
+      <div class="modal-btns">
+        <button class="btn btn-danger" onclick="closeEvModal()">Annulla</button>
+        <button class="btn btn-accent" onclick="saveEvent()">✦ Salva</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const THEMES=[
+  {id:'warrior',name:'Guerriero',icon:'⚔',desc:'Acciaio e sangue',cls:'Guerriero'},
+  {id:'mage',name:'Mago',icon:'🧙',desc:'Arcano e mistico',cls:'Mago'},
+  {id:'ranger',name:'Ranger',icon:'🏹',desc:'Foresta e vento',cls:'Ranger'},
+  {id:'paladin',name:'Paladino',icon:'🛡',desc:'Luce e onore',cls:'Paladino'},
+  {id:'rogue',name:'Ladro',icon:'🗡',desc:'Ombra e silenzio',cls:'Ladro'},
+  {id:'druid',name:'Druido',icon:'🌿',desc:'Terra e fuoco',cls:'Druido'},
+  {id:'bard',name:'Bardo',icon:'🎵',desc:'Melodia e incanto',cls:'Bardo'},
+];
+const CLS_THEME={Guerriero:'warrior',Mago:'mage',Ranger:'ranger',Paladino:'paladin',Ladro:'rogue',Druido:'druid',Bardo:'bard'};
+const ECOLORS=['#E86060','#E8A030','#E8D830','#6ABA6A','#4CC8C8','#6080E8','#C060D8','#E87860','#60B8E8','#E86090','#A8A8A8','#C9A84C'];
+const XP_LV=[0,100,250,450,700,1000,1350,1750,2200,2700,3300];
+const LVLS=[{l:1,t:'Apprendista'},{l:2,t:'Scudiero'},{l:3,t:'Cavaliere'},{l:4,t:'Campione'},{l:5,t:'Eroe'},{l:6,t:'Leggenda'},{l:7,t:'Semidio'},{l:8,t:'Immortale'},{l:9,t:'Asceso'},{l:10,t:'Dio delle Imprese'}];
+const QXPCELL={ui:30,nui:20,uni:15,nuni:10};
+const QUOTES=['"Ogni grande impresa inizia con un primo passo."','"Il coraggio non è l\'assenza di paura, ma l\'agire nonostante essa."','"Solo chi ha osato ha vissuto davvero."','"La leggenda di oggi è la fatica di ieri."','"Non arrenderti — il drago non ti aspetta."','"Ogni quest completata ti avvicina alla leggenda."'];
+
+let S={
+  hero:{name:'Eroe Senza Nome',class:'Guerriero',avatar:'🧙'},
+  theme:'warrior',totalXp:0,questsDone:0,todayXp:0,
+  todayDate:new Date().toDateString(),
+  quests:[],habits:[],events:[],log:[],
+  calMonth:new Date().getMonth(),calYear:new Date().getFullYear(),
+  selAv:'🧙',editEvId:null,selColor:ECOLORS[0]
+};
+
+async function save(){
+  const json=JSON.stringify(S);
+  try{
+    if(window.electronAPI){await window.electronAPI.saveData(json);}
+    else{localStorage.setItem('ql3',json);}
+  }catch(e){try{localStorage.setItem('ql3',json);}catch(_){}}
+}
+async function load(){
+  try{
+    let r=null;
+    if(window.electronAPI){r=await window.electronAPI.loadData();}
+    else{r=localStorage.getItem('ql3');}
+    if(r)S={...S,...JSON.parse(r)};
+  }catch(e){}
+  if(S.todayDate!==new Date().toDateString()){S.todayXp=0;S.todayDate=new Date().toDateString();S.habits.forEach(h=>h.doneToday=false);save();}
+}
+
+function applyTheme(id){
+  S.theme=id;document.body.setAttribute('data-theme',id);
+  document.querySelectorAll('.theme-card').forEach(c=>c.classList.toggle('active',c.dataset.t===id));
+}
+
+async function init(){
+  await load();
+  buildThemeGrid();buildColorPicker();applyTheme(S.theme||'warrior');
+  document.getElementById('heroNameInput').value=S.hero.name!=='Eroe Senza Nome'?S.hero.name:'';
+  document.getElementById('heroClassInput').value=S.hero.class;
+  document.getElementById('quoteD').textContent=QUOTES[Math.floor(Math.random()*QUOTES.length)];
+  renderAll();
+}
+init();
+
+function renderAll(){updateHeroBar();renderQuests();renderHabits();renderCalendar();renderLog();renderLevels();}
+
+function buildThemeGrid(){
+  document.getElementById('themeGrid').innerHTML=THEMES.map(t=>
+    `<div class="theme-card" data-t="${t.id}" onclick="applyTheme('${t.id}');save()">
+      <div class="theme-icon">${t.icon}</div>
+      <div class="theme-name">${t.name.toUpperCase()}</div>
+      <div class="theme-desc">${t.desc}</div>
+    </div>`).join('');
+  document.querySelectorAll('.theme-card').forEach(c=>c.classList.toggle('active',c.dataset.t===S.theme));
+}
+
+function buildColorPicker(){
+  document.getElementById('colorPicker').innerHTML=ECOLORS.map(c=>
+    `<div class="color-swatch ${c===S.selColor?'sel':''}" style="background:${c}" onclick="pickColor('${c}',this)"></div>`).join('');
+}
+function pickColor(c,el){S.selColor=c;document.querySelectorAll('.color-swatch').forEach(s=>s.classList.remove('sel'));el.classList.add('sel');}
+
+// HERO BAR
+function calcLv(){let l=1;for(let i=XP_LV.length-1;i>=0;i--){if(S.totalXp>=XP_LV[i]){l=i+1;break;}}return Math.min(l,10);}
+function updateHeroBar(){
+  const lv=calcLv(),cur=XP_LV[lv-1]||0,next=XP_LV[lv]||XP_LV[XP_LV.length-1];
+  const pct=lv>=10?100:Math.min(100,((S.totalXp-cur)/(next-cur))*100);
+  document.getElementById('heroAvatar').textContent=S.hero.avatar;
+  document.getElementById('heroNameDisplay').textContent=S.hero.name;
+  document.getElementById('heroClassDisplay').textContent=`${S.hero.avatar} ${S.hero.class} — Livello ${lv} · ${LVLS[lv-1]?.t||''}`;
+  document.getElementById('xpFill').style.width=pct+'%';
+  document.getElementById('xpLabel').textContent=`${S.totalXp-cur} / ${next-cur} XP`;
+  document.getElementById('totalXpD').textContent=S.totalXp;
+  document.getElementById('questsDoneD').textContent=S.questsDone;
+  document.getElementById('streakD').textContent=S.habits.length?Math.max(...S.habits.map(h=>h.streak||0),0):0;
+  document.getElementById('todayXpD').textContent=S.todayXp;
+  document.getElementById('todayQD').textContent=S.quests.filter(q=>q.completedDate===new Date().toDateString()).length;
+}
+
+function showPanel(n){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+n).classList.add('active');
+  document.getElementById('nav-'+n).classList.add('active');
+  if(n==='calendar')renderCalendar();
+}
+
+// QUESTS
+function qCell(u,i){if(u==='urgent'&&i==='important')return 'ui';if(u==='not-urgent'&&i==='important')return 'nui';if(u==='urgent'&&i==='not-important')return 'uni';return 'nuni';}
+function addQuest(){
+  const inp=document.getElementById('questInput'),name=inp.value.trim();
+  if(!name){showToast('⚠ Scrivi il nome della quest!');return;}
+  const u=document.getElementById('questUrgency').value,i=document.getElementById('questImportance').value;
+  const dl=document.getElementById('questDeadline').value,cell=qCell(u,i);
+  S.quests.push({id:Date.now(),name,cell,deadline:dl,completed:false,completedDate:null,xp:QXPCELL[cell]});
+  inp.value='';document.getElementById('questDeadline').value='';
+  save();renderQuests();updateHeroBar();showToast('📜 Quest aggiunta!');
+}
+function renderQuests(){
+  ['ui','nui','uni','nuni'].forEach(cell=>{
+    const qs=S.quests.filter(q=>q.cell===cell);
+    const el=document.getElementById('cell-'+cell);if(!el)return;
+    el.innerHTML=qs.length?qs.map(q=>miniQ(q)).join(''):
+      '<div style="font-size:11px;color:var(--text-dim);font-style:italic;opacity:.5;padding:4px">Vuoto</div>';
+  });
+  renderUpcoming();
+}
+function miniQ(q){
+  const today=new Date();today.setHours(0,0,0,0);
+  let dl='',ov=false;
+  if(q.deadline){const d=new Date(q.deadline+'T00:00:00'),diff=Math.round((d-today)/86400000);
+    if(diff<0&&!q.completed){dl=`⚠${Math.abs(diff)}g`;ov=true;}
+    else if(diff===0)dl='oggi';else if(diff===1)dl='domani';else dl=diff+'g';}
+  return `<div class="quest-item ${q.completed?'completed':''}">
+    <div class="quest-check ${q.completed?'checked':''}" onclick="toggleQ(${q.id})">${q.completed?'✓':''}</div>
+    <div class="quest-body">
+      <div class="quest-name">${q.name}</div>
+      <div class="quest-meta"><span class="quest-xp">+${q.xp}xp</span>${dl?`<span class="quest-deadline ${ov?'overdue':''}">${dl}</span>`:''}</div>
+    </div>
+    <button class="btn btn-danger btn-sm" onclick="delQ(${q.id})">✕</button>
+  </div>`;
+}
+function toggleQ(id){
+  const q=S.quests.find(q=>q.id===id);if(!q)return;
+  const pl=calcLv();
+  if(!q.completed){q.completed=true;q.completedDate=new Date().toDateString();addXP(q.xp,q.name);S.questsDone++;if(calcLv()>pl)showLvUp(calcLv());showToast(`⚔ Quest completata! +${q.xp} XP`);}
+  else{q.completed=false;q.completedDate=null;S.totalXp=Math.max(0,S.totalXp-q.xp);S.todayXp=Math.max(0,S.todayXp-q.xp);S.questsDone=Math.max(0,S.questsDone-1);showToast('↩ Quest riaperta');}
+  save();renderQuests();updateHeroBar();
+}
+function delQ(id){S.quests=S.quests.filter(q=>q.id!==id);save();renderQuests();updateHeroBar();}
+function renderUpcoming(){
+  const el=document.getElementById('upcomingList');
+  const today=new Date();today.setHours(0,0,0,0);
+  const up=S.quests.filter(q=>q.deadline&&!q.completed).sort((a,b)=>new Date(a.deadline)-new Date(b.deadline)).slice(0,4);
+  if(!up.length){el.innerHTML='<div style="font-size:12px;color:var(--text-dim);font-style:italic;text-align:center;padding:12px">Nessuna scadenza</div>';return;}
+  el.innerHTML=up.map(q=>{const d=new Date(q.deadline+'T00:00:00'),diff=Math.round((d-today)/86400000);
+    const c=diff<=0?'#E86060':diff<=2?'#E8A030':'#6ABA6A';
+    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px dashed var(--border);font-size:13px">
+      <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-right:8px">${q.name}</span>
+      <span style="color:${c};font-size:11px;white-space:nowrap">${diff<=0?'Scaduta!':diff===0?'Oggi':diff+'g'}</span></div>`;}).join('');
+}
+
+// HABITS
+function addHabit(){
+  const inp=document.getElementById('habitInput'),name=inp.value.trim();
+  if(!name){showToast('⚠ Scrivi il nome del rito!');return;}
+  const emoji=document.getElementById('habitEmoji').value;
+  S.habits.push({id:Date.now(),name,emoji,streak:0,best:0,doneToday:false,history:[]});
+  inp.value='';save();renderHabits();updateHeroBar();showToast('🔥 Rito aggiunto!');
+}
+function renderHabits(){
+  const el=document.getElementById('habitList');
+  if(!S.habits.length){el.innerHTML='<div class="empty-state">Nessun rito ancora. Inizia la tua leggenda...</div>';return;}
+  el.innerHTML=S.habits.map(h=>{
+    const days7=Array.from({length:7},(_,i)=>{const d=new Date();d.setDate(d.getDate()-(6-i));return h.history?.includes(d.toDateString());});
+    const dots=days7.map((done,i)=>`<div class="chain-dot ${done?(i===6?'today':'filled'):''}"></div>`).join('');
+    const se=h.streak>=30?'⚡':h.streak>=21?'👑':h.streak>=14?'🌟':h.streak>=7?'⚔':'🔥';
+    return `<div class="habit-item">
+      <div class="habit-dot ${h.doneToday?'done':''}" onclick="toggleH(${h.id})">${h.doneToday?'✓':''}</div>
+      <div class="habit-info">
+        <div class="habit-name">${h.emoji} ${h.name}</div>
+        <div class="habit-streak">${se} Streak: ${h.streak} giorni</div>
+        <div class="habit-chain">${dots}</div>
+      </div>
+      <button class="btn btn-danger btn-sm" onclick="delH(${h.id})">✕</button>
+    </div>`;}).join('');
+}
+function toggleH(id){
+  const h=S.habits.find(h=>h.id===id);if(!h)return;
+  const today=new Date().toDateString(),pl=calcLv();
+  if(!h.doneToday){
+    h.doneToday=true;if(!h.history)h.history=[];if(!h.history.includes(today))h.history.push(today);
+    h.streak++;h.best=Math.max(h.best||0,h.streak);
+    const bonus=h.streak>=7?5:0;const xp=15+bonus;
+    addXP(xp,`Rito: ${h.name}`);if(calcLv()>pl)showLvUp(calcLv());
+    showToast(`🔥 Rito compiuto! +${xp} XP${bonus?' (streak bonus!)':''}`);
+  } else {
+    h.doneToday=false;h.history=h.history?.filter(d=>d!==today)||[];h.streak=Math.max(0,h.streak-1);
+    S.totalXp=Math.max(0,S.totalXp-15);S.todayXp=Math.max(0,S.todayXp-15);showToast('↩ Rito annullato');
+  }
+  save();renderHabits();updateHeroBar();
+}
+function delH(id){S.habits=S.habits.filter(h=>h.id!==id);save();renderHabits();updateHeroBar();}
+
+// CALENDAR
+function eventsOnDate(ds){
+  const date=new Date(ds+'T00:00:00');
+  return S.events.filter(ev=>{
+    const start=new Date(ev.date+'T00:00:00');
+    if(date<start)return false;
+    if(ev.repeatEnd){const end=new Date(ev.repeatEnd+'T00:00:00');if(date>end)return false;}
+    if(ev.repeat==='none')return ev.date===ds;
+    if(ev.repeat==='daily')return true;
+    if(ev.repeat==='weekly')return(date-start)%(7*86400000)===0;
+    if(ev.repeat==='monthly')return date.getDate()===start.getDate();
+    return false;
+  });
+}
+function changeMonth(d){S.calMonth+=d;if(S.calMonth>11){S.calMonth=0;S.calYear++;}if(S.calMonth<0){S.calMonth=11;S.calYear--;}renderCalendar();}
+function renderCalendar(){
+  const MN=['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'];
+  document.getElementById('calMonthLabel').textContent=`${MN[S.calMonth]} ${S.calYear}`;
+  const grid=document.getElementById('calGrid');
+  const DN=['Lun','Mar','Mer','Gio','Ven','Sab','Dom'];
+  let html=DN.map(d=>`<div class="cal-day-name">${d}</div>`).join('');
+  const first=new Date(S.calYear,S.calMonth,1);
+  let dow=first.getDay();dow=dow===0?6:dow-1;
+  const dim=new Date(S.calYear,S.calMonth+1,0).getDate();
+  const prev=new Date(S.calYear,S.calMonth,0).getDate();
+  const today=new Date();
+  for(let i=0;i<dow;i++)html+=`<div class="cal-day other-month">${prev-dow+1+i}</div>`;
+  for(let d=1;d<=dim;d++){
+    const date=new Date(S.calYear,S.calMonth,d);
+    const ds=date.toISOString().split('T')[0];
+    const isToday=date.toDateString()===today.toDateString();
+    const evs=eventsOnDate(ds);
+    const hasQ=S.quests.some(q=>q.deadline===ds&&!q.completed);
+    const dots=evs.map(e=>`<div class="cal-dot" style="background:${e.color||'var(--accent)'}"></div>`).join('');
+    const qdot=hasQ?`<div class="cal-dot" style="background:var(--accent-light)"></div>`:'';
+    html+=`<div class="cal-day ${isToday?'today':''}" onclick="selectDay('${ds}')">${d}<div class="cal-event-dots">${dots}${qdot}</div></div>`;
+  }
+  const rem=42-dow-dim;for(let i=1;i<=rem;i++)html+=`<div class="cal-day other-month">${i}</div>`;
+  grid.innerHTML=html;
+}
+let lastSelDs='';
+function selectDay(ds){
+  lastSelDs=ds;
+  const date=new Date(ds+'T00:00:00');
+  const label=date.toLocaleDateString('it-IT',{weekday:'long',day:'numeric',month:'long'});
+  document.getElementById('calDayTitle').textContent=`📅 ${label}`;
+  const evs=eventsOnDate(ds),qs=S.quests.filter(q=>q.deadline===ds);
+  let html='';
+  if(evs.length){
+    html+=`<div style="font-size:10px;font-family:'Cinzel',serif;color:var(--accent);letter-spacing:1.5px;margin-bottom:8px">EVENTI</div>`;
+    const REPT={none:'',daily:'Ogni giorno',weekly:'Ogni settimana',monthly:'Ogni mese'};
+    html+=evs.map(e=>`<div class="day-event" style="border-left:3px solid ${e.color||'var(--accent)'}">
+      <div class="day-event-dot" style="background:${e.color||'var(--accent)'}"></div>
+      <span class="day-event-name">${e.name}</span>
+      ${e.time?`<span class="day-event-time">${e.time}</span>`:''}
+      ${REPT[e.repeat]?`<span class="day-event-rep">↻ ${REPT[e.repeat]}</span>`:''}
+      <button class="btn btn-danger btn-sm" onclick="delEv(${e.id})">✕</button>
+    </div>`).join('');
+  }
+  if(qs.length){
+    html+=`<div style="font-size:10px;font-family:'Cinzel',serif;color:var(--accent);letter-spacing:1.5px;margin:10px 0 8px">QUEST</div>`;
+    html+=qs.map(q=>`<div style="padding:7px 0;border-bottom:1px dashed var(--border);font-size:13px;${q.completed?'opacity:.4;text-decoration:line-through':''}">${q.name} <span style="color:var(--accent);font-size:10px;font-family:'Cinzel',serif">+${q.xp}xp</span></div>`).join('');
+  }
+  if(!evs.length&&!qs.length)html='<div class="empty-state">Nessun evento per questo giorno</div>';
+  html+=`<div style="margin-top:12px"><button class="btn btn-accent btn-sm" onclick="openEventModal(null,'${ds}')" style="width:100%">+ Aggiungi Evento</button></div>`;
+  document.getElementById('calDayContent').innerHTML=html;
+  document.getElementById('evDate').value=ds;
+}
+
+// EVENT MODAL
+function openEventModal(id,ds){
+  S.editEvId=id;
+  if(id){
+    const ev=S.events.find(e=>e.id===id);if(!ev)return;
+    document.getElementById('evName').value=ev.name;
+    document.getElementById('evDate').value=ev.date;
+    document.getElementById('evTime').value=ev.time||'';
+    document.getElementById('evRepeat').value=ev.repeat||'none';
+    document.getElementById('evRepEnd').value=ev.repeatEnd||'';
+    S.selColor=ev.color||ECOLORS[0];buildColorPicker();
+    document.getElementById('evModalTitle').textContent='✦ Modifica Evento';
+  } else {
+    document.getElementById('evName').value='';
+    if(ds)document.getElementById('evDate').value=ds;
+    document.getElementById('evTime').value='';
+    document.getElementById('evRepeat').value='none';
+    document.getElementById('evRepEnd').value='';
+    document.getElementById('evModalTitle').textContent='✦ Nuovo Evento';
+  }
+  toggleRepEnd();
+  document.getElementById('evOverlay').classList.add('show');
+}
+function closeEvModal(){document.getElementById('evOverlay').classList.remove('show');}
+function toggleRepEnd(){
+  const v=document.getElementById('evRepeat').value;
+  document.getElementById('repEndWrap').style.display=v!=='none'?'block':'none';
+}
+function saveEvent(){
+  const name=document.getElementById('evName').value.trim();
+  if(!name){showToast('⚠ Inserisci il nome!');return;}
+  const date=document.getElementById('evDate').value;
+  if(!date){showToast('⚠ Inserisci la data!');return;}
+  const ev={id:S.editEvId||Date.now(),name,date,time:document.getElementById('evTime').value||'',repeat:document.getElementById('evRepeat').value,repeatEnd:document.getElementById('evRepEnd').value||null,color:S.selColor};
+  if(S.editEvId){const idx=S.events.findIndex(e=>e.id===S.editEvId);if(idx>=0)S.events[idx]=ev;}
+  else S.events.push(ev);
+  closeEvModal();save();renderCalendar();
+  if(lastSelDs)selectDay(lastSelDs);
+  showToast('✦ Evento salvato!');
+}
+function delEv(id){S.events=S.events.filter(e=>e.id!==id);save();renderCalendar();if(lastSelDs)selectDay(lastSelDs);showToast('✕ Evento rimosso');}
+
+// XP
+function addXP(amt,reason){
+  S.totalXp+=amt;S.todayXp+=amt;
+  S.log.unshift({text:reason,xp:amt,time:new Date().toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'}),date:new Date().toLocaleDateString('it-IT')});
+  if(S.log.length>100)S.log.pop();renderLog();
+}
+function renderLog(){
+  const el=document.getElementById('logList');
+  if(!S.log.length){el.innerHTML='<div class="empty-state">Nessuna impresa ancora registrata...</div>';return;}
+  el.innerHTML=S.log.slice(0,30).map(e=>`<div class="log-entry"><span class="log-time">${e.date} ${e.time}</span><span class="log-text">${e.text}</span><span class="log-xp">+${e.xp} XP</span></div>`).join('');
+}
+
+// HERO
+function selectAv(el,av){S.selAv=av;document.querySelectorAll('.av-pick').forEach(a=>a.style.borderColor='var(--border)');el.style.borderColor='var(--accent)';}
+function saveHero(){
+  const name=document.getElementById('heroNameInput').value.trim()||'Eroe Senza Nome';
+  const cls=document.getElementById('heroClassInput').value;
+  S.hero={name,class:cls,avatar:S.selAv};
+  const t=CLS_THEME[cls];if(t){applyTheme(t);}
+  save();updateHeroBar();showToast('⚔ Eroe salvato!');
+}
+function renderLevels(){
+  document.getElementById('levelsList').innerHTML=LVLS.map(l=>{
+    const reached=S.totalXp>=XP_LV[l.l-1];
+    return `<div style="display:flex;justify-content:space-between;padding:3px 8px;border-radius:2px;background:${reached?'rgba(255,255,255,.04)':'transparent'}">
+      <span style="color:${reached?'var(--accent-light)':'var(--text-dim)'}">Lv.${l.l} — ${l.t}</span>
+      <span style="color:${reached?'var(--accent)':'rgba(255,255,255,.15)'};font-family:'Cinzel',serif;font-size:11px">${reached?'✓':XP_LV[l.l-1]+' XP'}</span>
+    </div>`;}).join('');
+}
+
+// UI
+function showToast(msg){
+  const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
+  clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2800);
+}
+function showLvUp(lv){
+  document.getElementById('lvlText').textContent=`Sei salito al Livello ${lv}: "${LVLS[lv-1]?.t||'Leggenda'}"! Il tuo nome risuona nei regni!`;
+  document.getElementById('lvlOverlay').classList.add('show');
+}
+
+document.getElementById('lvlOverlay').addEventListener('click',function(e){if(e.target===this)this.classList.remove('show');});
+document.getElementById('evOverlay').addEventListener('click',function(e){if(e.target===this)closeEvModal();});
+document.getElementById('questInput').addEventListener('keydown',e=>{if(e.key==='Enter')addQuest();});
+document.getElementById('habitInput').addEventListener('keydown',e=>{if(e.key==='Enter')addHabit();});
+document.getElementById('evName').addEventListener('keydown',e=>{if(e.key==='Enter')saveEvent();});
+</script>
+</body>
+</html>
